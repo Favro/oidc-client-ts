@@ -211,6 +211,7 @@ export class UserManager {
     public async signinPopup(args: SigninPopupArgs = {}): Promise<User> {
         const logger = this._logger.create("signinPopup");
         const {
+            popupWindowHomePage,
             popupWindowFeatures,
             popupWindowTarget,
             ...requestArgs
@@ -220,7 +221,7 @@ export class UserManager {
             logger.throw(new Error("No popup_redirect_uri configured"));
         }
 
-        const handle = await this._popupNavigator.prepare({ popupWindowFeatures, popupWindowTarget });
+        const handle = await this._popupNavigator.prepare({ popupWindowHomePage, popupWindowFeatures, popupWindowTarget });
         const user = await this._signin({
             request_type: "si:p",
             redirect_uri: url,

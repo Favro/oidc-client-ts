@@ -15,10 +15,11 @@ export class PopupNavigator implements INavigator {
     constructor(private _settings: UserManagerSettingsStore) {}
 
     public async prepare({
+        popupWindowHomePage = this._settings.popup_homepage_uri,
         popupWindowFeatures = this._settings.popupWindowFeatures,
         popupWindowTarget = this._settings.popupWindowTarget,
     }: PopupWindowParams): Promise<PopupWindow> {
-        return new PopupWindow({ popupWindowFeatures, popupWindowTarget });
+        return new PopupWindow({ popupWindowHomePage, popupWindowFeatures, popupWindowTarget });
     }
 
     public async callback(url: string, { keepOpen = false }): Promise<void> {
