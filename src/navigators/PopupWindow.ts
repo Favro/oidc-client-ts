@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 import { Logger, PopupUtils, type PopupWindowFeatures } from "../utils";
-import { DefaultPopupWindowFeatures, DefaultPopupTarget } from "../UserManagerSettings";
+import { DefaultPopupWindowFeatures, DefaultPopupTarget, DefaultPopupHomePage } from "../UserManagerSettings";
 import { AbstractChildWindow } from "./AbstractChildWindow";
 import type { NavigateParams, NavigateResponse } from "./IWindow";
 
@@ -13,6 +13,7 @@ const second = 1000;
  * @public
  */
 export interface PopupWindowParams {
+    popupWindowHomePage?: string;
     popupWindowFeatures?: PopupWindowFeatures;
     popupWindowTarget?: string;
 }
@@ -26,12 +27,13 @@ export class PopupWindow extends AbstractChildWindow {
     protected _window: WindowProxy | null;
 
     public constructor({
+        popupWindowHomePage = DefaultPopupHomePage,
         popupWindowTarget = DefaultPopupTarget,
         popupWindowFeatures = {},
     }: PopupWindowParams) {
         super();
         const centeredPopup = PopupUtils.center({ ...DefaultPopupWindowFeatures, ...popupWindowFeatures });
-        this._window = window.open(undefined, popupWindowTarget, PopupUtils.serialize(centeredPopup));
+        this._window = window.open(popupWindowHomePage, popupWindowTarget, PopupUtils.serialize(centeredPopup));
         if (popupWindowFeatures.closePopupWindowAfterInSeconds && popupWindowFeatures.closePopupWindowAfterInSeconds > 0) {
             setTimeout(() => {
                 if (!this._window || typeof this._window.closed !== "boolean" || this._window.closed) {

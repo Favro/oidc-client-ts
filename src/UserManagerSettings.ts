@@ -12,6 +12,7 @@ export const DefaultPopupWindowFeatures: PopupWindowFeatures = {
     height: 640,
     closePopupWindowAfterInSeconds: -1,
 };
+export const DefaultPopupHomePage = undefined;
 export const DefaultPopupTarget = "_blank";
 const DefaultAccessTokenExpiringNotificationTimeInSeconds = 60;
 const DefaultCheckSessionIntervalInSeconds = 2;
@@ -23,6 +24,7 @@ export const DefaultSilentRequestTimeoutInSeconds = 10;
  * @public
  */
 export interface UserManagerSettings extends OidcClientSettings {
+    popup_homepage_uri?: string;
     /** The URL for the page containing the call to signinPopupCallback to handle the callback from the OIDC/OAuth2 */
     popup_redirect_uri?: string;
     popup_post_logout_redirect_uri?: string;
@@ -92,6 +94,7 @@ export interface UserManagerSettings extends OidcClientSettings {
  * @public
  */
 export class UserManagerSettingsStore extends OidcClientSettingsStore {
+    public readonly popup_homepage_uri: string | undefined;
     public readonly popup_redirect_uri: string;
     public readonly popup_post_logout_redirect_uri: string | undefined;
     public readonly popupWindowFeatures: PopupWindowFeatures;
@@ -124,6 +127,7 @@ export class UserManagerSettingsStore extends OidcClientSettingsStore {
 
     public constructor(args: UserManagerSettings) {
         const {
+            popup_homepage_uri = args.popup_homepage_uri || DefaultPopupHomePage,
             popup_redirect_uri = args.redirect_uri,
             popup_post_logout_redirect_uri = args.post_logout_redirect_uri,
             popupWindowFeatures = DefaultPopupWindowFeatures,
@@ -157,6 +161,7 @@ export class UserManagerSettingsStore extends OidcClientSettingsStore {
 
         super(args);
 
+        this.popup_homepage_uri = popup_homepage_uri;
         this.popup_redirect_uri = popup_redirect_uri;
         this.popup_post_logout_redirect_uri = popup_post_logout_redirect_uri;
         this.popupWindowFeatures = popupWindowFeatures;

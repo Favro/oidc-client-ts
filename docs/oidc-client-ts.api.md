@@ -545,6 +545,8 @@ export interface PopupWindowParams {
     // (undocumented)
     popupWindowFeatures?: PopupWindowFeatures;
     // (undocumented)
+    popupWindowHomePage?: string;
+    // (undocumented)
     popupWindowTarget?: string;
 }
 
@@ -1036,6 +1038,8 @@ export interface UserManagerSettings extends OidcClientSettings {
     monitorAnonymousSession?: boolean;
     monitorSession?: boolean;
     // (undocumented)
+    popup_homepage_uri?: string;
+    // (undocumented)
     popup_post_logout_redirect_uri?: string;
     popup_redirect_uri?: string;
     popupWindowFeatures?: PopupWindowFeatures;
@@ -1075,6 +1079,8 @@ export class UserManagerSettingsStore extends OidcClientSettingsStore {
     readonly monitorAnonymousSession: boolean;
     // (undocumented)
     readonly monitorSession: boolean;
+    // (undocumented)
+    readonly popup_homepage_uri: string | undefined;
     // (undocumented)
     readonly popup_post_logout_redirect_uri: string | undefined;
     // (undocumented)
